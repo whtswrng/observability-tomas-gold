@@ -1,0 +1,33 @@
+
+
+## Client
+- Initial load (/v1/user)
+- Login page
+    - POST ("/v1/login")
+- Entity list page
+    - Table with entities (GET "/v1/entities")
+- Host details page
+    - CPU avg load for n minutes (BigNumber) (GET /v1/metrics?entityId=123&startTime=123&endTime=123)
+    - CPU avg load time-series for n minutes (Series)
+    - "Is there high CPU load RIGHT NOW?" Yes/No
+    - 
+
+## Server (BFF)
+Deals with sessions
+- GET /v1/user
+- POST /v1/login
+
+## Host Agent (Collector Agent)
+Agent runs on the client machine and collects the CPU metrics and sends them to Collector -> /v1/collect
+
+## Collector (Centrallized Collector) 
+- POST (/v1/collect)
+
+## Data Service
+Provides all information about entities and their metrics
+- GET /v1/entities
+- GET /v1/metrics?entityId=123&startTime=123&endTime=123
+
+## Alerting Service
+Periodically fetches host metrics and alerts if neccessary
+- GET /v1/alerts
