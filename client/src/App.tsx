@@ -49,8 +49,8 @@ const AppContent: React.FC = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             {/* <Route path="/register" element={<Register />} /> */}
-            <Route path="/entities" element={<Entities />} />
-            <Route path="/entities/hosts/:id" element={<HostDetails />} />
+            <Route path="/org/:id/entities" element={<Entities />} />
+            <Route path="/org/:id/entities/hosts/:id" element={<HostDetails />} />
           </Routes>
         </Suspense>
       </Content>

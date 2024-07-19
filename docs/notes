@@ -21,12 +21,13 @@ Deals with sessions
 Agent runs on the client machine and collects the CPU metrics and sends them to Collector -> /v1/collect
 
 ## Collector (Centrallized Collector) 
+Collects and stores the metrics
 - POST (/v1/collect)
 
 ## Data Service
 Provides all information about entities and their metrics
-- GET /v1/entities
-- GET /v1/metrics?entityId=123&startTime=123&endTime=123
+- GET /v1/data/entities
+- GET /v1/data/metrics?entityId=123&startTime=123&endTime=123
 
 ## Alerting Service
 Periodically fetches host metrics and alerts if neccessary

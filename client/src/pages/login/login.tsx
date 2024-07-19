@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, TextField, Typography, Container, Box, Alert } from "@mui/material";
+import { useAuth } from "../../contexts/auth-provider";
+import { useNavigate } from "react-router-dom";
+import { getOrgRoute } from "../../router";
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const usernameRef = useRef<any>();
+  const passwordRef = useRef<any>();
   const [error, setError] = useState<string | null>(null);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null); // Reset error message
 
-    if (username && password) {
-      // Perform login (mocked here, replace with real authentication logic)
-      //   onLogin(username, password);
-    } else {
-      setError("Both fields are required");
+    const username = usernameRef?.current?.value;
+    const password = passwordRef?.current?.value;
+
+    if (!username || !password) {
+      return setError("Both fields are required");
+    }
+
+    try {
+      const u = await login(username, password);
+      navigate(getOrgRoute(u.orgId));
+    } catch (e) {
+      setError((e as any)?.message ?? "Something went wrong.");
     }
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -38,6 +50,7 @@ const Login: React.FC = () => {
           </Typography>
           <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
             <TextField
+              inputRef={usernameRef}
               margin="normal"
               required
               fullWidth
@@ -46,10 +59,9 @@ const Login: React.FC = () => {
               name="username"
               autoComplete="username"
               autoFocus
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
+              inputRef={passwordRef}
               margin="normal"
               required
               fullWidth
@@ -58,8 +70,6 @@ const Login: React.FC = () => {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
             />
             {error && (
               <Alert severity="error" sx={{ mt: 2 }}>

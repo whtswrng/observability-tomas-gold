@@ -1,57 +1,37 @@
 // src/context/AuthContext.js
 import React, { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { login } from "../actions/login";
+import { User, useGetUser } from "../queries/user";
+import { logout } from "../actions/logout";
 
 interface IAuthContext {
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<User>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
-  user:
-    | {
-        id: string;
-        fullName: string;
-      }
-    | undefined;
+  user?: User;
 }
 
-// Create the context
-const AuthContext = createContext<IAuthContext | undefined>(undefined);
+const AuthContext = createContext<IAuthContext>({} as any);
 
-// Custom hook to use the auth context
 export const useAuth = () => useContext(AuthContext);
 
-// Provider component
 export const AuthProvider = ({ children }) => {
-  const [authToken, setAuthToken] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const { isLoading, data: user, clear, refetch } = useGetUser();
 
-  useEffect(() => {
-    // Load the token from localStorage if it exists
-    setLoading(false);
-  }, []);
-
-  const login = async (username, password) => {
-    try {
-      const response = await axios.post("/v1/auth/login", { username, password });
-      const token = response.data.token;
-      setAuthToken(token);
-      localStorage.setItem("authToken", token);
-      navigate("/entities");
-    } catch (error) {
-      console.error("Login failed", error);
-    }
+  const _login = async (username, password) => {
+    const res = await login(username, password);
+    refetch();
+    return res;
   };
 
-  const logout = async () => {
-    // call /v1/auth/logout
-    navigate("/");
+  const _logout = async () => {
+    await logout();
+    clear();
   };
 
   return (
-    <AuthContext.Provider value={{ user: undefined, login, logout, isAuthenticated: false }}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, login: _login, logout: _logout, isAuthenticated: user !== undefined }}>
+      {!isLoading && children}
     </AuthContext.Provider>
   );
 };

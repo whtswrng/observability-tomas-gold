@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -14,8 +14,11 @@
   },
   "dependencies": {
     "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.0",
     "@types/node": "^20.14.11",
+    "body-parser": "^1.20.2",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "typescript": "^5.5.3"
   }
 }
