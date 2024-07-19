@@ -4,8 +4,9 @@ import { useQuery } from "./query";
 
 export interface User {
   id: string;
-  username: string;
+  fullName: string;
   orgId: string;
+  orgName: string;
 }
 
 export function useGetUser() {

@@ -16,6 +16,7 @@ export function useQuery<T>(fetch: () => Promise<{data: T}>): {
     setIsLoading(true);
     try {
       const res = await fetch();
+      console.log(res.data);
       setData(res.data);
     } catch (e) {
       setError((e as Error)?.message ?? "Something went wrong");

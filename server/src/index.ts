@@ -5,9 +5,10 @@ import session from "express-session";
 declare module "express-session" {
   interface SessionData {
     user?: {
-      username: string;
       id: string;
       orgId: string;
+      fullName: string;
+      orgName: string;
     };
   }
 }
@@ -34,6 +35,8 @@ const users = {
     password: "admin",
     id: "12345",
     orgId: "150",
+    orgName: "Observability Org",
+    fullName: "John Doe",
   },
 };
 
@@ -43,7 +46,7 @@ app.post("/api/auth/v1/login", (req, res) => {
 
   if (users[username] && users[username].password === password) {
     const u = users[username];
-    req.session.user = { username: u.username, id: u.id, orgId: u.orgId };
+    req.session.user = { fullName: u.fullName, id: u.id, orgId: u.orgId, orgName: u.orgName };
     res.json({ ...req.session.user });
   } else {
     res.status(401).json({ message: "Invalid username or password" });
@@ -63,7 +66,7 @@ app.post("/api/auth/v1/logout", (req, res) => {
 // Get user endpoint
 app.get("/api/auth/v1/user", (req, res) => {
   if (req.session.user) {
-    res.json({ user: req.session.user });
+    res.json({ ...req.session.user });
   } else {
     res.status(401).json({ message: "No user logged in" });
   }
