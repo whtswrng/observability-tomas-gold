@@ -30,4 +30,4 @@ Provides all information about entities and their metrics
 
 ## (progress) Alerting Service
 Periodically fetches host metrics and alerts if neccessary
-- GET /v1/alerts
+- GET /v1/alerts - returns active alerts
