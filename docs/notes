@@ -12,15 +12,15 @@
     - "Is there high CPU load RIGHT NOW?" Yes/No
     - 
 
-## Server (BFF)
+## (done) Server (BFF)
 Deals with sessions
 - GET /v1/user
 - POST /v1/login
 
-## Host Agent (Collector Agent)
+## (done) Host Agent (Collector Agent)
 Agent runs on the client machine and collects the CPU metrics and sends them to Collector -> /v1/collect
 
-## Collector (Centrallized Collector) 
+## (progress) Collector (Centrallized Collector) 
 Collects and stores the metrics
 - POST (/v1/collect)
 

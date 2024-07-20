@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "noImplicitAny": false,
+      "baseUrl": "./",
+      "typeRoots": [
+        "./node_modules/@types",
+        "./types"
+      ]
+    },
+    "include": ["src/**/*", "types/**/*"]
+  }
+  
