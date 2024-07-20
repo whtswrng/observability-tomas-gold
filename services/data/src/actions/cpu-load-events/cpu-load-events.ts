@@ -12,7 +12,6 @@ export const getCpuLoadEvents = async (
 ) => {
   try {
     const data = await getMetrics(orgId, userId, hostId, fromTime, toTime);
-
     const loadMachine = new LoadStateMachine();
 
     for (let i = 0; i < data.metrics.length; i++) {

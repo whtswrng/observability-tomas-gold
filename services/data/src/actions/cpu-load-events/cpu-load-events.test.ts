@@ -1,4 +1,4 @@
-import { format, addMinutes, addHours, subMinutes, subHours } from "date-fns";
+import { format, addMinutes, addHours, subMinutes, subHours, addSeconds } from "date-fns";
 import { getCpuLoadEvents } from "./cpu-load-events"; // Adjust the import path as necessary
 import { getMetrics } from "../metrics"; // Adjust the import path as necessary
 
@@ -142,6 +142,43 @@ describe("getCpuLoadEvents", () => {
         {
           type: "RECOVERED",
           startTimestamp: addMinutes(now, 11).getTime(),
+          hostId: mockHostId,
+        },
+      ],
+    });
+  });
+
+  it("should be able to deal with metrics in seconds", async () => {
+    const now = new Date();
+
+    (getMetrics as jest.Mock).mockResolvedValue({
+      metrics: [
+        // trigger
+        { timestamp: addSeconds(now, 0).getTime(), load: 1.6 },
+        { timestamp: addSeconds(now, 20).getTime(), load: 1.7 },
+        { timestamp: addSeconds(now, 40).getTime(), load: 1.3 },
+        { timestamp: addSeconds(now, 60).getTime(), load: 1.4 },
+        { timestamp: addSeconds(now, 90).getTime(), load: 1.5 },
+        { timestamp: addSeconds(now, 120).getTime(), load: 1.3 },
+        // trigger
+        { timestamp: addMinutes(now, 3).getTime(), load: 0.8 },
+        { timestamp: addMinutes(now, 4).getTime(), load: 0.6 },
+        { timestamp: addMinutes(now, 5).getTime(), load: 0.3 },
+      ],
+    });
+
+    const result = await getCpuLoadEvents(mockOrgId, mockUserId, mockHostId, mockFromTime, mockToTime);
+
+    expect(result).toEqual({
+      events: [
+        {
+          type: "HEAVY_LOAD",
+          startTimestamp: addSeconds(now, 0).getTime(),
+          hostId: mockHostId,
+        },
+        {
+          type: "RECOVERED",
+          startTimestamp: addMinutes(now, 3).getTime(),
           hostId: mockHostId,
         },
       ],
