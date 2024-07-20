@@ -5,6 +5,7 @@ import { getEntities } from "../entities";
 interface Notification {
   type: "alert" | "recovery";
   message: string;
+  timestamp: number;
   entity: {
     type: string;
     id: string;
@@ -29,6 +30,7 @@ export async function getActiveAlerts(jwt) {
       if (lastEvent.type === CpuLoadEventType.HeavyLoad)
         result.notifications.push({
           type: "alert",
+          timestamp: lastEvent.startTimestamp,
           message: `Host '${h.name}' is having troubles with CPU load!`,
           entity: {
             ...h,
@@ -37,6 +39,7 @@ export async function getActiveAlerts(jwt) {
       if (lastEvent.type === CpuLoadEventType.Recovered && isEventToday(lastEvent.startTimestamp))
         result.notifications.push({
           type: "recovery",
+          timestamp: lastEvent.startTimestamp,
           message: `Host '${h.name}' is no longer having issues with CPU load!`,
           entity: {
             ...h,

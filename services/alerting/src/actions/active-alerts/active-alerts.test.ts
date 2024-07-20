@@ -39,8 +39,9 @@ describe('getActiveAlerts', () => {
   });
 
   it('should add an alert notification for a host with HeavyLoad event', async () => {
+    const now = Date.now();
     const host = { id: '1', type: 'host', name: 'Test Host' };
-    const cpuLoadEvent = { events: [{ type: CpuLoadEventType.HeavyLoad, startTimestamp: Date.now() }] };
+    const cpuLoadEvent = { events: [{ type: CpuLoadEventType.HeavyLoad, startTimestamp: now }] };
 
     mockGetEntities.mockResolvedValue([host]);
     mockGetCpuLoadEvents.mockResolvedValue(cpuLoadEvent);
@@ -51,13 +52,15 @@ describe('getActiveAlerts', () => {
     expect(result.notifications[0]).toEqual({
       type: 'alert',
       message: `Host 'Test Host' is having troubles with CPU load!`,
+      timestamp: now, 
       entity: host,
     });
   });
 
   it('should add a recovery notification for a host with Recovered event today', async () => {
+    const now = Date.now();
     const host = { id: '1', type: 'host', name: 'Test Host' };
-    const cpuLoadEvent = { events: [{ type: CpuLoadEventType.Recovered, startTimestamp: Date.now() }] };
+    const cpuLoadEvent = { events: [{ type: CpuLoadEventType.Recovered, startTimestamp: now }] };
 
     mockGetEntities.mockResolvedValue([host]);
     mockGetCpuLoadEvents.mockResolvedValue(cpuLoadEvent);
@@ -69,6 +72,7 @@ describe('getActiveAlerts', () => {
     expect(result.notifications[0]).toEqual({
       type: 'recovery',
       message: `Host 'Test Host' is no longer having issues with CPU load!`,
+      timestamp: now, 
       entity: host,
     });
   });
