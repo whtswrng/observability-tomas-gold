@@ -1,6 +1,10 @@
 import express from "express";
 import { Request, Response } from "express";
 import session from "express-session";
+import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
+import { PORT, SECRET_KEY } from "./config";
+import { authorized } from "./middlewares/auth";
 
 declare module "express-session" {
   interface SessionData {
@@ -15,19 +19,20 @@ declare module "express-session" {
 
 // Create the Express application
 const app = express();
-const port = process.env.PORT || 3000;
-const sessionSecret = process.env.SESSION_SECRET || "very-secret";
+const sessionExpirationInHours = 72;
 
 // Middlewares
+// Use middleware to parse JSON and cookies
+app.use(cookieParser());
 app.use(express.json());
-app.use(
-  session({
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // set to true in PROD
-  })
-);
+// app.use(
+//   session({
+//     secret: sessionSecret,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false }, // set to true in PROD
+//   })
+// );
 
 // Hardcoded users with orgId
 const users = {
@@ -46,8 +51,18 @@ app.post("/api/auth/v1/login", (req, res) => {
 
   if (users[username] && users[username].password === password) {
     const u = users[username];
-    req.session.user = { fullName: u.fullName, id: u.id, orgId: u.orgId, orgName: u.orgName };
-    res.json({ ...req.session.user });
+    const loggedUser = { fullName: u.fullName, id: u.id, orgId: u.orgId, orgName: u.orgName };
+
+    const token = jwt.sign({ ...loggedUser }, SECRET_KEY, { expiresIn: sessionExpirationInHours + "h" });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: sessionExpirationInHours * 60 * 60 * 1000, // 72 hours in milliseconds
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict", // prevents CSRF attacks
+    });
+
+    res.json(loggedUser);
   } else {
     res.status(401).json({ message: "Invalid username or password" });
   }
@@ -64,17 +79,14 @@ app.post("/api/auth/v1/logout", (req, res) => {
 });
 
 // Get user endpoint
-app.get("/api/auth/v1/user", (req, res) => {
-  if (req.session.user) {
-    res.json({ ...req.session.user });
-  } else {
-    res.status(401).json({ message: "No user logged in" });
-  }
+app.get("/api/auth/v1/user", authorized, (req, res) => {
+  // @ts-ignore
+  res.json({ ...req.user });
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 export default app; // For testing

@@ -1,0 +1,17 @@
+{
+  "name": "observability-tomas-gold",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix services/client\" \"npm run dev --prefix services/server\"  \"npm run dev --prefix services/agent\" \"npm run dev --prefix services/collector\" \"npm run dev --prefix services/data-service\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
