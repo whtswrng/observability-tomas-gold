@@ -13,23 +13,10 @@ export const NavBar = () => {
   };
 
   return (
-    <nav>
-      <ul style={{ display: "flex", gap: 5, listStyle: "none" }}>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
+    <nav style={{float: 'right', padding: 10}}>
           <a href="/login" onClick={handleLogout}>
             Logout
           </a>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/entities">Entities</Link>
-        </li>
-      </ul>
     </nav>
   );
 };

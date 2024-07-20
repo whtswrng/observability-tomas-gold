@@ -1,14 +1,12 @@
-import React, { Suspense, lazy, useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import { styled } from "@mui/system";
-// import Login from './pages/Login';
-// import Register from './pages/Register';
-import { AuthProvider, useAuth } from "./contexts/auth-provider";
-// import { Login } from './pages/login/login';
-import { NavBar } from "./components/navbar";
 import { CssBaseline } from "@mui/material";
+import { styled } from "@mui/system";
+import React, { Suspense, lazy } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { NavBar } from "./components/navbar";
 import Sidebar from "./components/sidebar";
+import { AuthProvider, useAuth } from "./contexts/auth-provider";
 import { Home } from "./pages/home";
+import { Spinner } from "./components/spinner";
 
 const Entities = lazy(() => import("./pages/entities/entities"));
 const Hosts = lazy(() => import("./pages/hosts/hosts"));
@@ -28,7 +26,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppContent/>
+        <AppContent />
       </AuthProvider>
     </Router>
   );
@@ -47,10 +45,8 @@ const AppContent: React.FC = () => {
       <Sidebar />
       <Content>
         <NavBar />
-        <div style={{ minHeight: 64 }} /> {/* Toolbar placeholder */}
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spinner/>}>
           <Routes>
-            {/* <Route path="/register" element={<Register />} /> */}
             <Route path="/org/:id/" element={<Home />} />
             <Route path="/org/:id/entities" element={<Entities />} />
             <Route path="/org/:id/entities/hosts" element={<Hosts />} />

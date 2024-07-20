@@ -70,12 +70,8 @@ app.post("/api/auth/v1/login", (req, res) => {
 
 // Logout endpoint
 app.post("/api/auth/v1/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ message: "Logout failed" });
-    }
-    res.json({ message: "Logout successful" });
-  });
+  res.clearCookie("token"); // Clear the "token" cookie
+  res.json({ message: "Logout successful" });
 });
 
 // Get user endpoint
