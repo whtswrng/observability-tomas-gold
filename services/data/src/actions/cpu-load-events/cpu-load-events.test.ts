@@ -1,6 +1,6 @@
-import { format, addMinutes, addHours, subMinutes, subHours, addSeconds } from "date-fns";
-import { getCpuLoadEvents } from "./cpu-load-events"; // Adjust the import path as necessary
+import { addMinutes, addSeconds } from "date-fns";
 import { getMetrics } from "../metrics"; // Adjust the import path as necessary
+import { getCpuLoadEvents } from "./cpu-load-events"; // Adjust the import path as necessary
 
 // Mock the getMetrics function
 jest.mock("../metrics", () => ({
@@ -185,15 +185,11 @@ describe("getCpuLoadEvents", () => {
     });
   });
 
-  //   it("should handle errors thrown by getMetrics", async () => {
-  //     // Mock the getMetrics function to throw an error
-  //     (getMetrics as jest.Mock).mockRejectedValue(new Error("Database error"));
+  it("should handle errors thrown by getMetrics", async () => {
+    (getMetrics as jest.Mock).mockRejectedValue(new Error("Database error"));
 
-  //     await expect(getCpuLoadEvents(mockOrgId, mockUserId, mockHostId, mockFromTime, mockToTime)).rejects.toThrow(
-  //       "Could not retrieve metrics"
-  //     );
-
-  //     // Optionally, verify that getMetrics was called with correct arguments
-  //     expect(getMetrics).toHaveBeenCalledWith(mockOrgId, mockUserId, mockHostId, mockFromTime, mockToTime);
-  //   });
+    await expect(getCpuLoadEvents(mockOrgId, mockUserId, mockHostId, mockFromTime, mockToTime)).rejects.toThrow(
+      "Could not retrieve metrics"
+    );
+  });
 });

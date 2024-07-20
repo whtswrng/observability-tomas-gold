@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import { getMetrics } from "../metrics";
 import { LoadStateMachine } from "./load-state-machine";
 
