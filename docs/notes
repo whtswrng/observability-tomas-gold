@@ -49,6 +49,7 @@ FE
 - error boundaries
 - current route highlight
 - breadcrumbs
+- handle errors in the widgets when connection goes south
 x alerts
 x hosts details
     x time window

@@ -24,22 +24,22 @@ export async function getActiveAlerts(jwt) {
 
   for (const h of hosts) {
     const cpuLoad = await getCpuLoadEvents(jwt, h.id, 0, toTime);
-    const lastEvent = cpuLoad.events[cpuLoad.events.length - 1];
+    const firstEvent = cpuLoad.events[0];
 
-    if (lastEvent) {
-      if (lastEvent.type === CpuLoadEventType.HeavyLoad)
+    if (firstEvent) {
+      if (firstEvent.type === CpuLoadEventType.HeavyLoad)
         result.notifications.push({
           type: "alert",
-          timestamp: lastEvent.startTimestamp,
+          timestamp: firstEvent.startTimestamp,
           message: `Host '${h.name}' is having troubles with CPU load!`,
           entity: {
             ...h,
           },
         });
-      if (lastEvent.type === CpuLoadEventType.Recovered && isEventToday(lastEvent.startTimestamp))
+      if (firstEvent.type === CpuLoadEventType.Recovered && isEventToday(firstEvent.startTimestamp))
         result.notifications.push({
           type: "recovery",
-          timestamp: lastEvent.startTimestamp,
+          timestamp: firstEvent.startTimestamp,
           message: `Host '${h.name}' is no longer having issues with CPU load!`,
           entity: {
             ...h,

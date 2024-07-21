@@ -31,7 +31,7 @@ export const Alerts = () => {
       </ListItem>
       <List>
         {data?.notifications.map((n) => (
-          <ListItem>
+          <ListItem key={n.message}>
             <Alert severity={getSeverity(n.type)}>
               <Tooltip title={n.timestamp}>
                 <span>{n.message}</span>
