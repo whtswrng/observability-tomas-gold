@@ -1,10 +1,10 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 interface TimeWindowContextProps {
-  startTime: Date;
-  endTime: Date;
-  setStartTime: (date: Date) => void;
-  setEndTime: (date: Date) => void;
+  startTime: number | null;
+  endTime: number | null;
+  setStartTime: (timestamp: number) => void;
+  setEndTime: (timestamp: number) => void;
 }
 
 const TimeWindowContext = createContext<TimeWindowContextProps | undefined>(undefined);
@@ -22,8 +22,8 @@ interface TimeWindowProviderProps {
 }
 
 export const TimeWindowProvider: React.FC<TimeWindowProviderProps> = ({ children }) => {
-  const [startTime, setStartTime] = useState<Date>(new Date());
-  const [endTime, setEndTime] = useState<Date>(new Date());
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [endTime, setEndTime] = useState<number | null>(null);
 
   return (
     <TimeWindowContext.Provider value={{ startTime, endTime, setStartTime, setEndTime }}>

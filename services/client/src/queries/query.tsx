@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// There are libraries that solves this issue, but I took this opportunity to write some actually interesting and use Typescript Generics
 export function useQuery<T>(fetch: () => Promise<{data: T}>): {
   data: T | undefined;
   error?: string;

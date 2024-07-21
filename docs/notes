@@ -46,6 +46,7 @@ Periodically fetches host metrics and alerts if neccessary
 
 
 FE
+- rrror boundaries
 - breadcrumbs
 - alerts
 - hosts details
