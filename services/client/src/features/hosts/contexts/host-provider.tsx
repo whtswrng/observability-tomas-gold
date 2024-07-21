@@ -1,27 +1,44 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { CpuLoadMetric, useGetCpuLoadMetrics } from "../queries/metrics";
+import { CpuLoadMetric, CpuLoadMetrics, useGetCpuLoadMetrics } from "../queries/metrics";
 import { useParams } from "react-router-dom";
 import { useTimeWindow } from "../../../contexts/time-window-provider";
+import { CpuLoadEvents, useGetCpuLoadEvents } from "../queries/cpu-load-events";
 
 interface IAuthContext {
-  cpuLoadMetrics: Array<CpuLoadMetric> | undefined;
+  cpuLoadMetrics: CpuLoadMetrics | undefined;
+  cpuLoadEvents: CpuLoadEvents | undefined;
   isLoading: boolean;
 }
 
 const HostContext = createContext<IAuthContext>({} as any);
 
-export const useHosts = () => useContext(HostContext);
+export const useHost = () => useContext(HostContext);
 
 export const HostProvider = ({ children }) => {
   const { hostId } = useParams();
   const { startTime } = useTimeWindow();
 
-  const { isLoading, data: cpuLoadMetrics, refetch: refetchCpuMetrics } = useGetCpuLoadMetrics(hostId!, startTime);
+  const {
+    isLoading: isCpuLoadLoading,
+    data: cpuLoadMetrics,
+    refetch: refetchCpuMetrics,
+  } = useGetCpuLoadMetrics(hostId!, startTime);
+
+  const {
+    isLoading: isEventsLoading,
+    data: cpuLoadEvents,
+    refetch: refetchEvents,
+  } = useGetCpuLoadEvents(hostId!, startTime);
 
   useEffect(() => {
     console.log("call API");
+    refetchEvents();
     refetchCpuMetrics();
   }, [hostId, startTime]);
 
-  return <HostContext.Provider value={{ cpuLoadMetrics, isLoading }}>{!isLoading && children}</HostContext.Provider>;
+  return (
+    <HostContext.Provider value={{ cpuLoadMetrics, cpuLoadEvents, isLoading: isCpuLoadLoading || isEventsLoading }}>
+      {children}
+    </HostContext.Provider>
+  );
 };

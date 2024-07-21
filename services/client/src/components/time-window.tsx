@@ -8,27 +8,23 @@ import StopIcon from "@mui/icons-material/Stop";
 export const LIVE_RELOAD_INTERVAL_IN_MS = 10000;
 
 const TimeWindow: React.FC = () => {
-  const { setStartTime } = useTimeWindow();
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const { labelInMinutes, setLabelInMinutes } = useTimeWindow();
   const [liveEnabled, setLiveEnabled] = useState(true);
 
   const handleTimeChange = (value: string) => {
-    setSelectedOption(value);
-    const now = new Date();
-    const newStartTime = addMinutes(now, -parseInt(value)).getTime();
-    setStartTime(newStartTime);
+    setLabelInMinutes(value);
   };
 
   useEffect(() => {
-    if (!selectedOption || ! liveEnabled) return;
+    if (!labelInMinutes || ! liveEnabled) return;
     const interval = setInterval(() => {
-      handleTimeChange(selectedOption);
+      handleTimeChange(labelInMinutes);
     }, LIVE_RELOAD_INTERVAL_IN_MS);
     return () => {
       // graceful shutdown
       clearInterval(interval);
     };
-  }, [selectedOption, liveEnabled]);
+  }, [labelInMinutes, liveEnabled]);
 
   return (
     <div style={{ display: "flex", maxWidth: 500, gap: 10 }}>
@@ -36,7 +32,7 @@ const TimeWindow: React.FC = () => {
         <InputLabel size="small">Time Window</InputLabel>
         <Select
           size={"small"}
-          value={selectedOption}
+          value={labelInMinutes}
           onChange={(e) => handleTimeChange(e.target.value)}
           label="Time Window"
         >

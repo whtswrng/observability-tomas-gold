@@ -23,7 +23,10 @@ app.get("/api/data/v1/metrics", authorized, async (req, res) => {
 
     // @ts-ignore
     const data = await getMetrics(req.user.orgId, req.user.id, hostId, fromTime, toTime);
-    res.send(data);
+
+    setTimeout(() => {
+      res.send(data);
+    }, 500);
   } catch (e) {
     res.status(500).send("Something went wrong");
   }
@@ -37,7 +40,10 @@ app.get("/api/data/v1/cpu-load-events", authorized, async (req, res) => {
 
     // @ts-ignore
     const data = await getCpuLoadEvents(req.user.orgId, req.user.id, hostId, fromTime, toTime);
-    res.send(data);
+
+    setTimeout(() => {
+      res.send(data);
+    }, 500);
   } catch (e) {
     res.status(500).send("Something went wrong");
   }

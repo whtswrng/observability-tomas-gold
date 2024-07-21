@@ -11,7 +11,7 @@ import { useAuth } from '../contexts/auth-provider';
 import { getHostsRoute, getOrgRoute } from '../router';
 import { assertUserLoggedIn } from '../utils/assert-user-logged-in';
 
-const Sidebar = () => {
+const Sidebar = ({width}: {width: number}) => {
   const navigate = useNavigate();
   const {user} = useAuth();
 
@@ -20,11 +20,11 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
-        width: 240,
-        flexShrink: 0,
+        width,
         height: '100vh',
         borderRight: '1px solid #ddd',
         boxSizing: 'border-box',
+        position: 'fixed'
       }}
     >
       <List>

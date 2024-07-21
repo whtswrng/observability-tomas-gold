@@ -21,7 +21,7 @@ export const getCpuLoadEvents = async (
       hostId
     }));
 
-    return { events };
+    return { events: events?.reverse() ?? [] };
   } catch (err) {
     console.error("Error retrieve the metrics:", err);
     throw new Error("Could not retrieve metrics");

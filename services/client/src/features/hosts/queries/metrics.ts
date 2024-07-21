@@ -7,6 +7,11 @@ export interface CpuLoadMetric {
   load: number;
 }
 
+export interface CpuLoadMetrics {
+  metrics: Array<CpuLoadMetric>;
+  avg: string;
+}
+
 export function useGetCpuLoadMetrics(hostId: string, fromTime: number | null) {
-  return useQuery<Array<CpuLoadMetric>>(() => axios.get(`${ROUTES.METRICS}?hostId=${hostId}&fromTime=${fromTime}`));
+  return useQuery<CpuLoadMetrics>(() => axios.get(`${ROUTES.METRICS}?hostId=${hostId}&fromTime=${fromTime}`));
 }

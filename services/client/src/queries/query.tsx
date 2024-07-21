@@ -16,8 +16,8 @@ export function useQuery<T>(fetch: () => Promise<{data: T}>): {
   const doFetch = async () => {
     setIsLoading(true);
     try {
+      // TODO abort requests using cancel token when spamming
       const res = await fetch();
-      console.log(res.data);
       setData(res.data);
     } catch (e) {
       setError((e as Error)?.message ?? "Something went wrong");

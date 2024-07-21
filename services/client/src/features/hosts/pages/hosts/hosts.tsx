@@ -1,4 +1,5 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../../../components/spinner";
 import { useGetHosts } from "../../../../queries/entities";
@@ -10,7 +11,7 @@ import { assertUserLoggedIn } from "../../../../utils/assert-user-logged-in";
 const Hosts = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook
   const { isLoading, data: hosts } = useGetHosts();
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   assertUserLoggedIn(user);
 
@@ -29,9 +30,10 @@ const Hosts = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell></TableCell>
               <TableCell>Name</TableCell>
               <TableCell>CPU Load</TableCell>
+              <TableCell>Active Alerts</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -41,9 +43,10 @@ const Hosts = () => {
                 onClick={() => handleRowClick(host.id)} // Handle row click
                 sx={{ cursor: "pointer", "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" } }} // Add hover effect
               >
-                <TableCell>{host.id}</TableCell>
+                <TableCell><DeveloperBoardIcon/></TableCell>
                 <TableCell>{host.name}</TableCell>
-                <TableCell>0.22%</TableCell>
+                <TableCell>-</TableCell>
+                <TableCell>-</TableCell>
               </TableRow>
             ))}
           </TableBody>
