@@ -7,11 +7,12 @@ import Sidebar from "./components/sidebar";
 import { AuthProvider, useAuth } from "./contexts/auth-provider";
 import { Home } from "./pages/home";
 import { Spinner } from "./components/spinner";
+import { TimeWindowProvider } from "./contexts/time-window-provider";
 
 const Entities = lazy(() => import("./pages/entities/entities"));
-const Hosts = lazy(() => import("./pages/hosts/hosts"));
 const Login = lazy(() => import("./pages/login/login"));
-const HostDetails = lazy(() => import("./pages/hosts/details"));
+// feature navigators
+const HostsNavigator = lazy(() => import("./features/hosts/navigator"));
 
 const Root = styled("div")(({ theme }) => ({
   display: "flex",
@@ -26,7 +27,9 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <AppContent />
+        <TimeWindowProvider>
+          <AppContent />
+        </TimeWindowProvider>
       </AuthProvider>
     </Router>
   );
@@ -49,8 +52,7 @@ const AppContent: React.FC = () => {
           <Routes>
             <Route path="/org/:id/" element={<Home />} />
             <Route path="/org/:id/entities" element={<Entities />} />
-            <Route path="/org/:id/entities/hosts" element={<Hosts />} />
-            <Route path="/org/:id/entities/hosts/:id" element={<HostDetails />} />
+            <Route path="/org/:id/entities/hosts/*" element={<HostsNavigator />} />
           </Routes>
         </Suspense>
       </Content>

@@ -1,11 +1,11 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "../../components/spinner";
-import { useGetHosts } from "../../queries/entities";
-import { getHostDetailsRoute } from "../../router";
-import { Layout } from "../../components/layout";
-import { useAuth } from "../../contexts/auth-provider";
-import { assertUserLoggedIn } from "../../utils/assert-user-logged-in";
+import { Spinner } from "../../../../components/spinner";
+import { useGetHosts } from "../../../../queries/entities";
+import { getHostDetailsRoute } from "../../../../router";
+import { Layout } from "../../../../components/layout";
+import { useAuth } from "../../../../contexts/auth-provider";
+import { assertUserLoggedIn } from "../../../../utils/assert-user-logged-in";
 
 const Hosts = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook

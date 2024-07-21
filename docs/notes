@@ -43,3 +43,11 @@ Periodically fetches host metrics and alerts if neccessary
 (be done, fe x) - The front-end application should maintain a 10 minute window of historical CPU load information.
 (be done, fe x) - The front-end application should alert the user to high CPU load.
 (be done, fe x) - The front-end application should alert the user when CPU load has recovered.
+
+
+FE
+- breadcrumbs
+- alerts
+- hosts details
+    - time window
+    - widgets
