@@ -26,7 +26,7 @@ export const TimeWindowProvider: React.FC<TimeWindowProviderProps> = ({ children
   const [startTime, setStartTime] = useState(getStartTime(labelInMinutes));
 
   function getStartTime(fromString: string) {
-    const now = new Date();
+    const now = Date.now();
     const newStartTime = addMinutes(now, -parseInt(fromString)).getTime();
     return newStartTime;
   }

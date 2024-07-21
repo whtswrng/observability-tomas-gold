@@ -9,7 +9,6 @@ import { Home } from "./pages/home";
 import { Spinner } from "./components/spinner";
 import { TimeWindowProvider } from "./contexts/time-window-provider";
 
-const Entities = lazy(() => import("./pages/entities/entities"));
 const Login = lazy(() => import("./pages/login/login"));
 // feature navigators
 const HostsNavigator = lazy(() => import("./features/hosts/navigator"));
@@ -53,7 +52,6 @@ const AppContent: React.FC = () => {
         <Suspense fallback={<Spinner/>}>
           <Routes>
             <Route path="/org/:id/" element={<Home />} />
-            <Route path="/org/:id/entities" element={<Entities />} />
             <Route path="/org/:id/entities/hosts/*" element={<HostsNavigator />} />
           </Routes>
         </Suspense>

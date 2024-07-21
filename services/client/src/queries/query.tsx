@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-// There are libraries that solves this issue, but I took this opportunity to write  interesting code that uses Typescript Generics
+// There are libraries that solves this issue and provide more feaures like caching, but I took this opportunity to write an interesting code that uses Typescript Generics
+// https://tanstack.com/query/v4/docs/framework/react/quick-start
 export function useQuery<T>(fetch: () => Promise<{ data: T }>): {
   data: T | undefined;
   error?: string;
