@@ -1,8 +1,8 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import { CpuLoadMetric, CpuLoadMetrics, useGetCpuLoadMetrics } from "../queries/metrics";
+import { createContext, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTimeWindow } from "../../../contexts/time-window-provider";
 import { CpuLoadEvents, useGetCpuLoadEvents } from "../queries/cpu-load-events";
+import { CpuLoadMetrics, useGetCpuLoadMetrics } from "../queries/metrics";
 
 interface IAuthContext {
   cpuLoadMetrics: CpuLoadMetrics | undefined;
@@ -34,7 +34,6 @@ export const HostProvider = ({ children }) => {
   } = useGetCpuLoadEvents(hostId!, startTime);
 
   useEffect(() => {
-    console.log("call API");
     refetchEvents();
     refetchCpuMetrics();
   }, [hostId, startTime]);

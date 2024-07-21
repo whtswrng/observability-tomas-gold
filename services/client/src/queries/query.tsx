@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-// There are libraries that solves this issue, but I took this opportunity to write some actually interesting and use Typescript Generics
-export function useQuery<T>(fetch: () => Promise<{data: T}>): {
+// There are libraries that solves this issue, but I took this opportunity to write  interesting code that uses Typescript Generics
+export function useQuery<T>(fetch: () => Promise<{ data: T }>): {
   data: T | undefined;
   error?: string;
   isLoading: boolean;
@@ -38,7 +38,7 @@ export function useQuery<T>(fetch: () => Promise<{data: T}>): {
 
   const refetch = () => {
     doFetch();
-  }
+  };
 
   return { isLoading, data, error, abort, clear, refetch };
 }

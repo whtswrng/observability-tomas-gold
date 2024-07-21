@@ -1,23 +1,18 @@
-import React from "react";
-import { Line } from "react-chartjs-2";
+import { Box } from "@mui/material";
 import {
-  Chart as ChartJS,
-  LineElement,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LineElement,
   LinearScale,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
-  PointElement,
 } from "chart.js";
-import { Box, Typography } from "@mui/material";
-import { CpuLoadMetrics } from "../features/hosts/queries/metrics";
+import React from "react";
+import { Line } from "react-chartjs-2";
 
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
-
-interface TimeSeriesProps {
-  data: CpuLoadMetrics;
-}
 
 interface TimeSeriesPoint {
   timestamp: number;

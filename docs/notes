@@ -47,6 +47,9 @@ Periodically fetches host metrics and alerts if neccessary
 
 FE
 - error boundaries
+- login errors (401 message)
+- write unit tests for a widget
+- CPU values (0.1) translate them!
 x current route highlight
 - handle errors in the widgets when connection goes south
 x alerts

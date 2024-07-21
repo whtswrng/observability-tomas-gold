@@ -1,12 +1,14 @@
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Layout } from "../../../../components/layout";
 import TimeWindow from "../../../../components/time-window";
-import { Box, Card, Container, Grid, LinearProgress, Skeleton, Typography } from "@mui/material";
-import { HostProvider, useHost } from "../../contexts/host-provider";
 import { useTimeWindow } from "../../../../contexts/time-window-provider";
-import { IconWithTooltip } from "../../../../components/tooltip";
-import TimeSeries from "../../../../components/time-series";
-import { CpuLoadEventsTable } from "./widgets/cpu-load-event-table";
+import { HostProvider, useHost } from "../../contexts/host-provider";
+import { CpuHeavyLoadOccurences } from "./widgets/cpu-heavy-load-occurences";
+import { CpuLoadBigNumber } from "./widgets/cpu-load-big-number/cpu-load-big-number";
+import { CpuLoadTimeSeries } from "./widgets/cpu-load-time-series";
+import { CpuRecoveryLoadOccurences } from "./widgets/cpu-recovery-load-occurences";
+import { HostEvents } from "./widgets/host-events";
 
 export enum CpuState {
   Recovered = "RECOVERED",
@@ -61,133 +63,5 @@ const HostInfo = () => {
     </Box>
   );
 };
-
-interface WidgetProps {
-  isLoading: boolean;
-  hasData: boolean;
-  title: string;
-  description: string;
-  children: any;
-}
-
-const Widget = ({ isLoading, hasData, title, description, children }: WidgetProps) => {
-  return (
-    <Card>
-      <Box>
-        <Box>{isLoading ? <LinearProgress /> : null}</Box>
-        <Box style={{ padding: 10, paddingTop: 1 }}>
-          <Box style={{ marginTop: 5, display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h6">{title}</Typography>
-            <IconWithTooltip description={description} />
-          </Box>
-          {isLoading && !hasData ? <Skeleton variant="rectangular" height={60} /> : children}
-        </Box>
-      </Box>
-    </Card>
-  );
-};
-
-const BigNumber = ({ children }) => {
-  return (
-    <Box>
-      <Typography fontSize={40}>{children}</Typography>
-    </Box>
-  );
-};
-
-const CpuLoadBigNumber = () => {
-  const { cpuLoadMetrics, isLoading } = useHost();
-
-  return (
-    <Widget
-      isLoading={isLoading}
-      hasData={!!cpuLoadMetrics}
-      title={"CPU load"}
-      description="Average CPU load during the time window"
-    >
-      <BigNumber>{cpuLoadMetrics?.avg}</BigNumber>
-    </Widget>
-  );
-};
-
-const CpuLoadTimeSeries = () => {
-  const { cpuLoadMetrics, isLoading } = useHost();
-
-  const data = cpuLoadMetrics?.metrics.map((m) => ({
-    timestamp: m.timestamp,
-    value: m.load,
-  }));
-
-  return (
-    <Widget
-      isLoading={isLoading}
-      hasData={!!cpuLoadMetrics}
-      title={"CPU Load Over Time"}
-      description="Average CPU load during the time window over time"
-    >
-      <TimeSeries data={data} label="CPU Load" />
-    </Widget>
-  );
-};
-
-const HostEvents = () => {
-  const { cpuLoadEvents, isLoading } = useHost();
-
-  if (!cpuLoadEvents) return;
-
-  return (
-    <Widget
-      isLoading={isLoading}
-      hasData={!!cpuLoadEvents}
-      title={"Events"}
-      description="List of events such as outages, cpu or memory issues"
-    >
-      <CpuLoadEventsTable data={cpuLoadEvents.events} />
-    </Widget>
-  );
-};
-
-const CpuHeavyLoadOccurences = () => {
-  const { cpuLoadEvents, isLoading } = useHost();
-
-  const count = cpuLoadEvents?.events?.filter((e) => e.type === CpuState.HeavyLoad).length;
-
-  return (
-    <Widget
-      isLoading={isLoading}
-      hasData={!!cpuLoadEvents}
-      title={"CPU Heavy Load Count"}
-      description="How many times was CPU under heavy load for more than 2 minutes"
-    >
-      <BigNumber>{count}</BigNumber>
-    </Widget>
-  );
-};
-
-const CpuRecoveryLoadOccurences = () => {
-  const { cpuLoadEvents, isLoading } = useHost();
-
-  const count = cpuLoadEvents?.events?.filter((e) => e.type === CpuState.Recovered).length;
-
-  return (
-    <Widget
-      isLoading={isLoading}
-      hasData={!!cpuLoadEvents}
-      title={"CPU Recovery Load Count"}
-      description="How many times CPU recovered from heavy load for more than 2 minutes"
-    >
-      <BigNumber>{count}</BigNumber>
-    </Widget>
-  );
-};
-
-// const BigNumber: React.FC = () => {
-//   return (
-//     <Box sx={{ padding: 2, border: "1px solid gray", borderRadius: 1 }}>
-//       <Typography variant="h4">12345</Typography>
-//       <Typography variant="body2">Big Number Component</Typography>
-//     </Box>
-//   );
-// };
 
 export default HostDetails;

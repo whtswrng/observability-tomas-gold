@@ -1,7 +1,7 @@
-import React from "react";
-import { IconButton, Box } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
+import { IconButton } from "@mui/material";
 import Tooltip from '@mui/material/Tooltip';
+import React from "react";
 
 
 interface IconWithTooltipProps {

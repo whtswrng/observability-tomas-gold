@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Select, MenuItem, FormControl, InputLabel, Button, Box, Typography } from "@mui/material";
-import { addMinutes } from "date-fns";
-import { useTimeWindow } from "../contexts/time-window-provider";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useTimeWindow } from "../contexts/time-window-provider";
 
 export const LIVE_RELOAD_INTERVAL_IN_MS = 10000;
 
@@ -21,7 +20,6 @@ const TimeWindow: React.FC = () => {
       handleTimeChange(labelInMinutes);
     }, LIVE_RELOAD_INTERVAL_IN_MS);
     return () => {
-      // graceful shutdown
       clearInterval(interval);
     };
   }, [labelInMinutes, liveEnabled]);
