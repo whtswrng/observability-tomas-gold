@@ -6,7 +6,6 @@ import { HostProvider, useHost } from "../../contexts/host-provider";
 import { useTimeWindow } from "../../../../contexts/time-window-provider";
 import { IconWithTooltip } from "../../../../components/tooltip";
 import TimeSeries from "../../../../components/time-series";
-import EventChart from "../../../../components/event-chart";
 import { CpuLoadEventsTable } from "./widgets/cpu-load-event-table";
 
 export enum CpuState {
@@ -29,6 +28,7 @@ const HostDetails = () => {
 const Details = () => {
   return (
     <HostProvider>
+      <HostInfo />
       <Container sx={{ m: 0, mt: 4, padding: "0 !important" }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4}>
@@ -49,6 +49,16 @@ const Details = () => {
         </Grid>
       </Container>
     </HostProvider>
+  );
+};
+
+const HostInfo = () => {
+  const { hostName } = useHost();
+
+  return (
+    <Box sx={{ mt: 2 }}>
+      <Typography variant="h6">{hostName}</Typography>
+    </Box>
   );
 };
 

@@ -47,10 +47,14 @@ Periodically fetches host metrics and alerts if neccessary
 
 FE
 - error boundaries
-- current route highlight
-- breadcrumbs
+x current route highlight
 - handle errors in the widgets when connection goes south
 x alerts
 x hosts details
     x time window
     x widgets
+
+
+- What I intentionally skipped due to the scope
+    - CSS
+    - Breadcrumbs

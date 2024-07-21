@@ -8,6 +8,7 @@ interface IAuthContext {
   cpuLoadMetrics: CpuLoadMetrics | undefined;
   cpuLoadEvents: CpuLoadEvents | undefined;
   isLoading: boolean;
+  hostName: string;
 }
 
 const HostContext = createContext<IAuthContext>({} as any);
@@ -17,6 +18,8 @@ export const useHost = () => useContext(HostContext);
 export const HostProvider = ({ children }) => {
   const { hostId } = useParams();
   const { startTime } = useTimeWindow();
+  // TODO fetch this from /entities!
+  const hostName = 'My Computer';
 
   const {
     isLoading: isCpuLoadLoading,
@@ -37,7 +40,7 @@ export const HostProvider = ({ children }) => {
   }, [hostId, startTime]);
 
   return (
-    <HostContext.Provider value={{ cpuLoadMetrics, cpuLoadEvents, isLoading: isCpuLoadLoading || isEventsLoading }}>
+    <HostContext.Provider value={{ cpuLoadMetrics, hostName, cpuLoadEvents, isLoading: isCpuLoadLoading || isEventsLoading }}>
       {children}
     </HostContext.Provider>
   );

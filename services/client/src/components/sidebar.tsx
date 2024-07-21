@@ -1,6 +1,8 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import DevicesOtherIcon from "@mui/icons-material/DevicesOther";
+import LanIcon from "@mui/icons-material/Lan";
 import AlertIcon from "@mui/icons-material/Warning";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -75,8 +77,8 @@ const Sidebar = ({ width }: { width: number }) => {
       <List>
         <NavItem end={true} route={getOrgRoute(user.orgId)} text="Dashboard" icon={<DashboardIcon />} />
         <NavItem route={getHostsRoute(user.orgId)} text="Hosts" icon={<DeveloperBoardIcon />} />
-        <NavItem route={""} text="DEM" icon={<AlertIcon />} disabled />
-        <NavItem route={""} text="k8s" icon={<AlertIcon />} disabled />
+        <NavItem route={""} text="DEM" icon={<DevicesOtherIcon />} disabled />
+        <NavItem route={""} text="k8s" icon={<LanIcon />} disabled />
         <NavItem route={""} text="Alerting" icon={<AlertIcon />} disabled />
       </List>
       <Box sx={{ padding: 2 }}>
