@@ -3,18 +3,18 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/auth-provider";
 import { getOrgRoute } from "../../router";
+import { UnauthorizedError } from "../../actions/login";
 
 const Login: React.FC = () => {
-  // TODO remove  any
-  const usernameRef = useRef<any>();
-  const passwordRef = useRef<any>();
+  const usernameRef = useRef<HTMLInputElement>();
+  const passwordRef = useRef<HTMLInputElement>();
   const [error, setError] = useState<string | null>(null);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    setError(null); // Reset error message
+    setError(null);
 
     const username = usernameRef?.current?.value;
     const password = passwordRef?.current?.value;
@@ -27,12 +27,13 @@ const Login: React.FC = () => {
       const u = await login(username, password);
       navigate(getOrgRoute(u.orgId));
     } catch (e) {
+      if (e instanceof UnauthorizedError) return setError("Wrong credentials.");
       setError((e as any)?.message ?? "Something went wrong.");
     }
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -83,7 +84,7 @@ const Login: React.FC = () => {
           </Box>
         </Box>
       </Container>
-    </div>
+    </Box>
   );
 };
 

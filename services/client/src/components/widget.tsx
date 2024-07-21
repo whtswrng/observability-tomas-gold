@@ -1,4 +1,4 @@
-import { Box, Card, LinearProgress, Skeleton, Typography } from "@mui/material";
+import { Alert, Box, Card, LinearProgress, Skeleton, Typography } from "@mui/material";
 import { IconWithTooltip } from "./tooltip";
 
 interface WidgetProps {
@@ -7,9 +7,10 @@ interface WidgetProps {
   title: string;
   description: string;
   children: any;
+  error?: string;
 }
 
-export const Widget = ({ isLoading, hasData, title, description, children }: WidgetProps) => {
+export const Widget = ({ isLoading, error, hasData, title, description, children }: WidgetProps) => {
   return (
     <Card>
       <Box>
@@ -19,11 +20,20 @@ export const Widget = ({ isLoading, hasData, title, description, children }: Wid
             <Typography variant="h6">{title}</Typography>
             <IconWithTooltip description={description} />
           </Box>
-          {isLoading && !hasData ? <Skeleton variant="rectangular" height={60} /> : children}
+          {isLoading && !hasData ? <Skeleton variant="rectangular" height={60} /> : renderContent()}
         </Box>
       </Box>
     </Card>
   );
+
+  function renderContent() {
+    if (error) return <ErrorMessage />;
+    return <>{children}</>;
+  }
+};
+
+const ErrorMessage = () => {
+  return <Alert severity="error">Something when wrong when loading a widget.</Alert>;
 };
 
 export const BigNumber = ({ children }) => {

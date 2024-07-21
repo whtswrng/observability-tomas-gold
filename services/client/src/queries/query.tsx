@@ -10,7 +10,7 @@ export function useQuery<T>(fetch: () => Promise<{ data: T }>): {
   clear: () => void;
   refetch: () => void;
 } {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<T>();
   const [error, setError] = useState<string>();
 
@@ -20,6 +20,7 @@ export function useQuery<T>(fetch: () => Promise<{ data: T }>): {
       // TODO abort requests using cancel token when spamming
       const res = await fetch();
       setData(res.data);
+      setError(undefined);
     } catch (e) {
       setError((e as Error)?.message ?? "Something went wrong");
     }

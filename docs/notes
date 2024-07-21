@@ -46,6 +46,8 @@ Periodically fetches host metrics and alerts if neccessary
 
 
 FE
+- fix tests (BE)
+- fix bugs (active alerts BE)
 - error boundaries
 - login errors (401 message)
 - write unit tests for a widget

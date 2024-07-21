@@ -35,8 +35,9 @@ function App() {
 }
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
+  console.log('render login', isAuthenticated, user);
   if (!isAuthenticated) {
     return <Login />;
   }

@@ -11,9 +11,9 @@ describe("CPU Load Big Number Widget", () => {
   let server;
 
   afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+  afterEach(() => server.close());
 
-  describe("when server responded with metrics data", () => {
+  describe("when metrics api call succesfully finished with metrics data", () => {
     const mockedAverageFromServer = "0.37";
 
     beforeEach(() => {
@@ -30,7 +30,6 @@ describe("CPU Load Big Number Widget", () => {
           });
         }),
         http.get("/api/data/v1/cpu-load-events", () => {
-          // do not need events to be mocked
           return HttpResponse.json({ events: [] });
         }),
       ];
@@ -57,8 +56,52 @@ describe("CPU Load Big Number Widget", () => {
           </Routes>
         </MemoryRouter>
       );
+
       await waitFor(() => {
         const linkElement = screen.getByText(mockedAverageFromServer);
+        expect(linkElement).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe("when metrics api call finished with error", () => {
+    beforeEach(() => {
+      const handlers = [
+        http.get("/api/data/v1/metrics", () => {
+          return new HttpResponse(null, {
+            status: 500,
+          });
+        }),
+        http.get("/api/data/v1/cpu-load-events", () => {
+          return HttpResponse.json({ events: [] });
+        }),
+      ];
+
+      server = setupServer(...handlers);
+      server.listen();
+    });
+
+    it("should render an error in the widget", async () => {
+      render(
+        <MemoryRouter initialEntries={["/org/150/entities/hosts/111"]}>
+          <Routes>
+            <Route
+              path="/org/:orgId/entities/hosts/:hostId"
+              element={
+                <TimeWindowProvider>
+                  <TimeWindow />
+                  <HostProvider>
+                    <CpuLoadBigNumber />
+                  </HostProvider>
+                </TimeWindowProvider>
+              }
+            ></Route>
+          </Routes>
+        </MemoryRouter>
+      );
+
+      await waitFor(() => {
+        const linkElement = screen.getByText("Something when wrong when loading a widget.");
         expect(linkElement).toBeInTheDocument();
       });
     });
