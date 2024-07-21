@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/auth': 'http://localhost:3000',
-      '/api/alerts': 'http://localhost:3003',
+      '/api/alerting': 'http://localhost:3003',
       '/api/data': 'http://localhost:3004'
     }
   }

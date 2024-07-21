@@ -41,10 +41,10 @@ const Details = () => {
             <CpuRecoveryLoadOccurences />
           </Grid>
           <Grid item xs={8} sm={8} md={8} sx={{ minWidth: 750 }}>
-            <CpuLoadTimeSeries/>
+            <CpuLoadTimeSeries />
           </Grid>
           <Grid item xs={8} sm={8} md={8}>
-            <HostEvents/>
+            <HostEvents />
           </Grid>
         </Grid>
       </Container>
@@ -63,20 +63,16 @@ interface WidgetProps {
 const Widget = ({ isLoading, hasData, title, description, children }: WidgetProps) => {
   return (
     <Card>
-      {!hasData ? (
-        <Skeleton variant="rectangular" height={60} />
-      ) : (
-        <Box>
-          <Box>{isLoading ? <LinearProgress /> : null}</Box>
-          <Box style={{ padding: 10, paddingTop: 1 }}>
-            <Box style={{ marginTop: 5, display: "flex", justifyContent: "space-between" }}>
-              <Typography variant="h6">{title}</Typography>
-              <IconWithTooltip description={description} />
-            </Box>
-            {children}
+      <Box>
+        <Box>{isLoading ? <LinearProgress /> : null}</Box>
+        <Box style={{ padding: 10, paddingTop: 1 }}>
+          <Box style={{ marginTop: 5, display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h6">{title}</Typography>
+            <IconWithTooltip description={description} />
           </Box>
+          {isLoading && !hasData ? <Skeleton variant="rectangular" height={60} /> : children}
         </Box>
-      )}
+      </Box>
     </Card>
   );
 };
@@ -109,7 +105,7 @@ const CpuLoadTimeSeries = () => {
 
   const data = cpuLoadMetrics?.metrics.map((m) => ({
     timestamp: m.timestamp,
-    value: m.load
+    value: m.load,
   }));
 
   return (
@@ -127,7 +123,7 @@ const CpuLoadTimeSeries = () => {
 const HostEvents = () => {
   const { cpuLoadEvents, isLoading } = useHost();
 
-  if(!cpuLoadEvents) return;
+  if (!cpuLoadEvents) return;
 
   return (
     <Widget
@@ -136,7 +132,7 @@ const HostEvents = () => {
       title={"Events"}
       description="List of events such as outages, cpu or memory issues"
     >
-      <CpuLoadEventsTable data={cpuLoadEvents.events}/>
+      <CpuLoadEventsTable data={cpuLoadEvents.events} />
     </Widget>
   );
 };

@@ -42,12 +42,12 @@ const AppContent: React.FC = () => {
     return <Login />;
   }
 
-  const sideBarWidth = 240;
+  const sideBarWidth = 300;
 
   return (
     <Root>
       <CssBaseline />
-      <Sidebar width={240} />
+      <Sidebar width={sideBarWidth} />
       <Content style={{marginLeft: sideBarWidth}}>
         <NavBar />
         <Suspense fallback={<Spinner/>}>

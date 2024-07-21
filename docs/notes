@@ -46,9 +46,10 @@ Periodically fetches host metrics and alerts if neccessary
 
 
 FE
-- rrror boundaries
+- error boundaries
+- current route highlight
 - breadcrumbs
-- alerts
-- hosts details
-    - time window
-    - widgets
+x alerts
+x hosts details
+    x time window
+    x widgets
