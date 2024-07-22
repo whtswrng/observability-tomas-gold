@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useTimeWindow } from "../../../contexts/time-window-provider";
 import { CpuLoadEvents, useGetCpuLoadEvents } from "../queries/cpu-load-events";
 import { CpuLoadMetrics, useGetCpuLoadMetrics } from "../queries/metrics";
+import { assertHostDefined } from "../../../utils/assertions";
 
 interface IAuthContext {
   cpuLoadMetrics: CpuLoadMetrics | undefined;
@@ -23,19 +24,21 @@ export const HostProvider = ({ children }) => {
   const { startTime } = useTimeWindow();
   const hostName = "My Computer";
 
+  assertHostDefined(hostId);
+
   const {
     isLoading: isCpuLoadLoading,
     data: cpuLoadMetrics,
     refetch: refetchCpuMetrics,
     error: metricsError,
-  } = useGetCpuLoadMetrics(hostId!, startTime);
+  } = useGetCpuLoadMetrics(hostId, startTime);
 
   const {
     isLoading: isEventsLoading,
     data: cpuLoadEvents,
     refetch: refetchEvents,
     error: eventsError,
-  } = useGetCpuLoadEvents(hostId!, startTime);
+  } = useGetCpuLoadEvents(hostId, startTime);
 
   useEffect(() => {
     refetchEvents();

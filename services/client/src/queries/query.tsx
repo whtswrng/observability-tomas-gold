@@ -39,6 +39,7 @@ export function useQuery<T>(fetch: () => Promise<{ data: T }>): {
   };
 
   const refetch = () => {
+    if(isLoading) return; // do not refetch while request is in progress
     doFetch();
   };
 

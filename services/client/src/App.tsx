@@ -53,6 +53,7 @@ const AppContent: React.FC = () => {
           <Routes>
             <Route path="/org/:id/" element={<Home />} />
             <Route path="/org/:id/entities/hosts/*" element={<HostsNavigator />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>
       </Content>

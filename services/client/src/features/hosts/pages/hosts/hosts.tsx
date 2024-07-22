@@ -6,7 +6,7 @@ import { Spinner } from "../../../../components/spinner";
 import { useAuth } from "../../../../contexts/auth-provider";
 import { useGetHosts } from "../../../../queries/entities";
 import { getHostDetailsRoute } from "../../../../router";
-import { assertUserLoggedIn } from "../../../../utils/assert-user-logged-in";
+import { assertUserLoggedIn } from "../../../../utils/assertions";
 
 const Hosts = () => {
   const navigate = useNavigate();

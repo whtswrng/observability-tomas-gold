@@ -12,7 +12,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useAuth } from "../contexts/auth-provider";
 import { getHostsRoute, getOrgRoute } from "../router";
-import { assertUserLoggedIn } from "../utils/assert-user-logged-in";
+import { assertUserLoggedIn } from "../utils/assertions";
 
 import { Alert, Divider } from "@mui/material";
 import { Alerts } from "./alerts";
