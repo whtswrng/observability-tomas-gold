@@ -45,7 +45,7 @@ Periodically fetches host metrics and alerts if neccessary
 
 
 FE
-- UI improvements (color CPU load)
+x UI improvements (color CPU load)
 x fix tests (BE)
 x widgets errors
 x fix bugs (active alerts BE)
