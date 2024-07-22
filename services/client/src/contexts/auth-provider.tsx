@@ -1,8 +1,7 @@
-// src/context/AuthContext.js
-import React, { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useContext } from "react";
 import { login } from "../actions/login";
-import { User, useGetUser } from "../queries/user";
 import { logout } from "../actions/logout";
+import { User, useGetUser } from "../queries/user";
 
 interface IAuthContext {
   login: (username: string, password: string) => Promise<User>;
@@ -11,7 +10,7 @@ interface IAuthContext {
   user?: User;
 }
 
-const AuthContext = createContext<IAuthContext>({} as any);
+const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const useAuth = () => useContext(AuthContext);
 

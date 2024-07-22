@@ -28,7 +28,7 @@ const Login: React.FC = () => {
       navigate(getOrgRoute(u.orgId));
     } catch (e) {
       if (e instanceof UnauthorizedError) return setError("Wrong credentials.");
-      setError((e as any)?.message ?? "Something went wrong.");
+      setError((e as Error)?.message ?? "Something went wrong.");
     }
   };
 

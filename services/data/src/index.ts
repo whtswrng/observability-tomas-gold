@@ -6,23 +6,39 @@ import { authorized } from "./middlewares/auth";
 import { getEntities } from "./actions/entities";
 import { getMetrics } from "./actions/metrics";
 import { getCpuLoadEvents } from "./actions/cpu-load-events/cpu-load-events";
+import { assertUserAuthorized } from "./utils/assert-user-authorized";
 
-// Create the Express application
+export interface User {
+  id: string;
+  fullName: string;
+  orgId: string;
+  orgName: string;
+}
+
+// TODO move this to separate types file
+declare global {
+  namespace Express {
+    interface Request {
+      user?: User;
+    }
+  }
+}
+
 const app = express();
 
-// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// Get user endpoint
 app.get("/api/data/v1/metrics", authorized, async (req, res) => {
   try {
+    assertUserAuthorized(req.user);
     const hostId = req.query?.hostId;
     const fromTime = req.query?.fromTime ? parseInt(req.query?.fromTime.toString()) : Date.now();
     const toTime = req.query?.toTime ? parseInt(req.query?.toTime.toString()) : Date.now();
 
-    // @ts-ignore
-    const data = await getMetrics(req.user.orgId, req.user.id, hostId, fromTime, toTime);
+    if(!hostId) return res.status(400).send("Missing hostId");
+
+    const data = await getMetrics(req.user?.orgId, req.user.id, hostId.toString(), fromTime, toTime);
 
     setTimeout(() => {
       res.send(data);
@@ -34,12 +50,14 @@ app.get("/api/data/v1/metrics", authorized, async (req, res) => {
 
 app.get("/api/data/v1/cpu-load-events", authorized, async (req, res) => {
   try {
+    assertUserAuthorized(req.user);
     const hostId = req.query?.hostId;
     const fromTime = req.query?.fromTime ? parseInt(req.query?.fromTime.toString()) : Date.now();
     const toTime = req.query?.toTime ? parseInt(req.query?.toTime.toString()) : Date.now();
 
-    // @ts-ignore
-    const data = await getCpuLoadEvents(req.user.orgId, req.user.id, hostId, fromTime, toTime);
+    if(!hostId) return res.status(400).send("Missing hostId");
+
+    const data = await getCpuLoadEvents(req.user.orgId, req.user.id, hostId?.toString(), fromTime, toTime);
 
     setTimeout(() => {
       res.send(data);
@@ -51,7 +69,7 @@ app.get("/api/data/v1/cpu-load-events", authorized, async (req, res) => {
 
 app.get("/api/data/v1/entities", authorized, async (req, res) => {
   try {
-    // @ts-ignore
+    assertUserAuthorized(req.user);
     const data = await getEntities(req.user.orgId, req.user.id);
     res.send(data);
   } catch (e) {
@@ -59,7 +77,6 @@ app.get("/api/data/v1/entities", authorized, async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
 });

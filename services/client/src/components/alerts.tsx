@@ -12,7 +12,6 @@ export const Alerts = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("fetching new data!");
       refetch();
     }, FETCH_ALERTS_INTERVAL_IN_MS);
 

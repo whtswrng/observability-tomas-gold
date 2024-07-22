@@ -1,3 +1,4 @@
+import logger from "../../logger";
 import { getMetrics } from "../metrics";
 import { LoadStateMachine } from "./load-state-machine";
 
@@ -23,7 +24,7 @@ export const getCpuLoadEvents = async (
 
     return { events: events?.reverse() ?? [] };
   } catch (err) {
-    console.error("Error retrieve the metrics:", err);
+    logger.error("Error retrieve the metrics:", err);
     throw new Error("Could not retrieve metrics");
   }
 };

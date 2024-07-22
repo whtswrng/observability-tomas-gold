@@ -3,7 +3,7 @@ import { useHost } from "../../../contexts/host-provider";
 import { CpuState } from "../details";
 
 export const CpuRecoveryLoadOccurences = () => {
-  const { cpuLoadEvents, isLoading } = useHost();
+  const { cpuLoadEvents, isLoading, cpuEventsError } = useHost();
 
   const count = cpuLoadEvents?.events?.filter((e) => e.type === CpuState.Recovered).length;
 
@@ -11,6 +11,7 @@ export const CpuRecoveryLoadOccurences = () => {
     <Widget
       isLoading={isLoading}
       hasData={!!cpuLoadEvents}
+      error={cpuEventsError}
       title={"CPU Recovery Load Count"}
       description="How many times CPU recovered from heavy load for more than 2 minutes"
     >

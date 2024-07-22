@@ -20,6 +20,8 @@ app.post('/v1/collect', async (req, res) => {
   }
 
   try {
+    // here we would call our big data DB
+    // for the purposes of POC, we will just store it in the file
     const orgDir = join(__dirname, '..', '..', 'db', orgId);
     const filePath = join(orgDir, `cpu_avg_${hostId}`);
 
@@ -35,7 +37,6 @@ app.post('/v1/collect', async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(PORT, () => {
   logger.info(`Server is running at http://localhost:${PORT}`);
 });

@@ -13,7 +13,7 @@ interface IAuthContext {
   cpuEventsError?: string;
 }
 
-const HostContext = createContext<IAuthContext>({} as any);
+const HostContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const useHost = () => useContext(HostContext);
 

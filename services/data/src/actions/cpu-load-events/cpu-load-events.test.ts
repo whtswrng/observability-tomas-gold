@@ -1,6 +1,6 @@
 import { addMinutes, addSeconds } from "date-fns";
-import { getMetrics } from "../metrics"; // Adjust the import path as necessary
-import { getCpuLoadEvents } from "./cpu-load-events"; // Adjust the import path as necessary
+import { getMetrics } from "../metrics";
+import { getCpuLoadEvents } from "./cpu-load-events";
 
 // Mock the getMetrics function
 jest.mock("../metrics", () => ({
@@ -11,8 +11,8 @@ describe("getCpuLoadEvents", () => {
   const mockOrgId = "org1";
   const mockUserId = "user1";
   const mockHostId = "host1";
-  const mockFromTime = 1622505600000; // Example timestamp
-  const mockToTime = 1622592000000; // Example timestamp
+  const mockFromTime = 1622505600000;
+  const mockToTime = 1622592000000;
 
   it("should return no events when cpu load is oscillating", async () => {
     const now = new Date();
@@ -81,13 +81,13 @@ describe("getCpuLoadEvents", () => {
     expect(result).toEqual({
       events: [
         {
-          type: "HEAVY_LOAD",
-          startTimestamp: addMinutes(now, 1).getTime(),
+          type: "RECOVERED",
+          startTimestamp: addMinutes(now, 4).getTime(),
           hostId: mockHostId,
         },
         {
-          type: "RECOVERED",
-          startTimestamp: addMinutes(now, 4).getTime(),
+          type: "HEAVY_LOAD",
+          startTimestamp: addMinutes(now, 1).getTime(),
           hostId: mockHostId,
         },
       ],
@@ -125,13 +125,8 @@ describe("getCpuLoadEvents", () => {
     expect(result).toEqual({
       events: [
         {
-          type: "HEAVY_LOAD",
-          startTimestamp: addMinutes(now, 1).getTime(),
-          hostId: mockHostId,
-        },
-        {
           type: "RECOVERED",
-          startTimestamp: addMinutes(now, 4).getTime(),
+          startTimestamp: addMinutes(now, 11).getTime(),
           hostId: mockHostId,
         },
         {
@@ -141,7 +136,12 @@ describe("getCpuLoadEvents", () => {
         },
         {
           type: "RECOVERED",
-          startTimestamp: addMinutes(now, 11).getTime(),
+          startTimestamp: addMinutes(now, 4).getTime(),
+          hostId: mockHostId,
+        },
+        {
+          type: "HEAVY_LOAD",
+          startTimestamp: addMinutes(now, 1).getTime(),
           hostId: mockHostId,
         },
       ],
@@ -172,13 +172,13 @@ describe("getCpuLoadEvents", () => {
     expect(result).toEqual({
       events: [
         {
-          type: "HEAVY_LOAD",
-          startTimestamp: addSeconds(now, 0).getTime(),
+          type: "RECOVERED",
+          startTimestamp: addMinutes(now, 3).getTime(),
           hostId: mockHostId,
         },
         {
-          type: "RECOVERED",
-          startTimestamp: addMinutes(now, 3).getTime(),
+          type: "HEAVY_LOAD",
+          startTimestamp: addSeconds(now, 0).getTime(),
           hostId: mockHostId,
         },
       ],

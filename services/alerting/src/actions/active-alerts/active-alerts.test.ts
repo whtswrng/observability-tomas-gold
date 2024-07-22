@@ -64,7 +64,6 @@ describe('getActiveAlerts', () => {
 
     mockGetEntities.mockResolvedValue([host]);
     mockGetCpuLoadEvents.mockResolvedValue(cpuLoadEvent);
-    // mockIsEventToday.mockReturnValue(true);
 
     const result = await getActiveAlerts('fake-jwt');
 

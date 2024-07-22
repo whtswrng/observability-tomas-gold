@@ -1,40 +1,32 @@
-import express from "express";
-import { Request, Response } from "express";
-import session from "express-session";
 import cookieParser from "cookie-parser";
+import express from "express";
 import jwt from "jsonwebtoken";
 import { PORT, SECRET_KEY } from "./config";
 import { authorized } from "./middlewares/auth";
+import logger from "./logger";
 
-declare module "express-session" {
-  interface SessionData {
-    user?: {
-      id: string;
-      orgId: string;
-      fullName: string;
-      orgName: string;
-    };
+// TODO move this to separate types file
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        id: string;
+        orgId: string;
+        fullName: string;
+        orgName: string;
+      };
+    }
   }
 }
 
-// Create the Express application
 const app = express();
 const sessionExpirationInHours = 72;
 
-// Middlewares
-// Use middleware to parse JSON and cookies
 app.use(cookieParser());
 app.use(express.json());
-// app.use(
-//   session({
-//     secret: sessionSecret,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: false }, // set to true in PROD
-//   })
-// );
 
 // Hardcoded users with orgId
+// for the POC purposes only
 const users = {
   admin: {
     password: "admin",
@@ -45,7 +37,6 @@ const users = {
   },
 };
 
-// Login endpoint
 app.post("/api/auth/v1/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -68,21 +59,15 @@ app.post("/api/auth/v1/login", (req, res) => {
   }
 });
 
-// Logout endpoint
 app.post("/api/auth/v1/logout", (req, res) => {
-  res.clearCookie("token"); // Clear the "token" cookie
+  res.clearCookie("token");
   res.json({ message: "Logout successful" });
 });
 
-// Get user endpoint
 app.get("/api/auth/v1/user", authorized, (req, res) => {
-  // @ts-ignore
   res.json({ ...req.user });
 });
 
-// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
-
-export default app; // For testing

@@ -1,6 +1,6 @@
 
 
-## Client
+## (done) Client
 - Initial load (/v1/user)
 - Login page
     - POST ("/v1/login")
@@ -28,10 +28,9 @@ Provides all information about entities and their metrics
 - GET /v1/data/entities
 - GET /v1/data/metrics?entityId=123&startTime=123&endTime=123
 
-## (progress) Alerting Service
+## (done) Alerting Service
 Periodically fetches host metrics and alerts if neccessary
 - GET /v1/alerts - returns active alerts
-
 
 
 # Progress
@@ -46,14 +45,16 @@ Periodically fetches host metrics and alerts if neccessary
 
 
 FE
-- fix tests (BE)
-- fix bugs (active alerts BE)
-- error boundaries
-- login errors (401 message)
-- write unit tests for a widget
-- CPU values (0.1) translate them!
+- UI improvements (color CPU load)
+x fix tests (BE)
+x widgets errors
+x fix bugs (active alerts BE)
+x error boundaries
+x login errors (401 message)
+x write unit tests for a widget
+x CPU values (0.1) translate them!
 x current route highlight
-- handle errors in the widgets when connection goes south
+x handle errors in the widgets when connection goes south
 x alerts
 x hosts details
     x time window

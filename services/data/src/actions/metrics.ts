@@ -24,10 +24,8 @@ export const getMetrics = async (orgId: string, userId: string, hostId: string, 
       return {metrics: [], avg: null};
     }
 
-    // Split the data into lines
     const lines = data.split("\n");
 
-    // Parse and filter the data
     const metrics = lines
       .map((line) => {
         const [timestampStr, loadStr] = line.split(";");

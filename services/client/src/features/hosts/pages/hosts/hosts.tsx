@@ -1,23 +1,22 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Layout } from "../../../../components/layout";
 import { Spinner } from "../../../../components/spinner";
+import { useAuth } from "../../../../contexts/auth-provider";
 import { useGetHosts } from "../../../../queries/entities";
 import { getHostDetailsRoute } from "../../../../router";
-import { Layout } from "../../../../components/layout";
-import { useAuth } from "../../../../contexts/auth-provider";
 import { assertUserLoggedIn } from "../../../../utils/assert-user-logged-in";
 
 const Hosts = () => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
   const { isLoading, data: hosts } = useGetHosts();
   const { user } = useAuth();
 
   assertUserLoggedIn(user);
 
   const handleRowClick = (id: string) => {
-    // Navigate to a detailed view for the clicked host
-    navigate(getHostDetailsRoute(user.orgId, id)); // Adjust the path as needed
+    navigate(getHostDetailsRoute(user.orgId, id));
   };
 
   if (isLoading) {
@@ -40,10 +39,12 @@ const Hosts = () => {
             {hosts?.map((host) => (
               <TableRow
                 key={host.id}
-                onClick={() => handleRowClick(host.id)} // Handle row click
-                sx={{ cursor: "pointer", "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" } }} // Add hover effect
+                onClick={() => handleRowClick(host.id)}
+                sx={{ cursor: "pointer", "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.1)" } }}
               >
-                <TableCell><DeveloperBoardIcon/></TableCell>
+                <TableCell>
+                  <DeveloperBoardIcon />
+                </TableCell>
                 <TableCell>{host.name}</TableCell>
                 <TableCell>-</TableCell>
                 <TableCell>-</TableCell>

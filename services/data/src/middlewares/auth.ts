@@ -1,10 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { SECRET_KEY } from '../config';
+import { User } from 'src';
+import { assertUserAuthorized } from 'src/utils/assert-user-authorized';
 
-// Middleware to check authorization
+export interface AuthorizedRequest extends Request {
+  user: User;
+}
+
+// this is copy/pasted
+// in production, we we'd publish a common package with middlewares and other helpful tools and reuse it across org
 export const authorized = (req: Request, res: Response, next: NextFunction) => {
-  // Extract the token from the cookies
   const token = req.cookies?.token;
 
   if (!token) {
@@ -12,14 +18,8 @@ export const authorized = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    // Verify and decode the token
     const decoded = jwt.verify(token, SECRET_KEY);
-
-    // Attach decoded token to the request object
-    // @ts-ignore
     req.user = decoded;
-    
-    // Proceed to the next middleware or route handler
     next();
   } catch (err) {
     res.status(400).send('Invalid token.');
