@@ -9,18 +9,29 @@ const orgId = "150";
 const userId = "12345";
 const hostId = "111";
 
-function getAverageCpuLoad(): string {
-  const cpus = os.cpus().length;
-  const loadAverage = os.loadavg()[0] / cpus;
-  return loadAverage.toFixed(2);
+function getAverageCpuLoad(): string | undefined {
+  try {
+    const cpus = os.cpus().length;
+    const loadAverage = os.loadavg()[0] / cpus;
+    return loadAverage.toFixed(2);
+  } catch (e) {
+    logger.warn((e as Error).message ?? "Cannot get CPU information");
+  }
 }
 
 async function logCpuLoad() {
   const load = getAverageCpuLoad();
+  if (!load) return;
   // TODO switch to Bearer token and remove orgId and userId
   // How it works in real life scenario is that user will create token that is bound to his user withing an organization
   try {
-    await axios.post(`${COLLECTOR_ENDPOINT}/v1/collect`, { timestamp: Date.now(), orgId, userId, cpuAvg: load, hostId });
+    await axios.post(`${COLLECTOR_ENDPOINT}/v1/collect`, {
+      timestamp: Date.now(),
+      orgId,
+      userId,
+      cpuAvg: load,
+      hostId,
+    });
     logger.info(`CPU AVG succesfully sent to collector: "${load}"`);
   } catch (e) {
     // TODO gracefully handle errors

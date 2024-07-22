@@ -47,5 +47,6 @@ export async function getActiveAlerts(jwt) {
         });
     }
   }
+
   return result;
 }

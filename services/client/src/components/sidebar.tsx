@@ -15,7 +15,7 @@ import { getHostsRoute, getOrgRoute } from "../router";
 import { assertUserLoggedIn } from "../utils/assertions";
 
 import { Alert, Divider } from "@mui/material";
-import { Alerts } from "./alerts";
+import { Alerts } from "./alerts/alerts";
 
 const getNavigationStyle = (isActive: boolean) => {
   return {
@@ -81,10 +81,6 @@ const Sidebar = ({ width }: { width: number }) => {
         <NavItem route={""} text="k8s" icon={<LanIcon />} disabled />
         <NavItem route={""} text="Alerting" icon={<AlertIcon />} disabled />
       </List>
-      <Box sx={{ padding: 2 }}>
-        <Divider />
-        <Alerts />
-      </Box>
     </Box>
   );
 };

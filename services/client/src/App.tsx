@@ -41,7 +41,7 @@ const AppContent: React.FC = () => {
     return <Login />;
   }
 
-  const sideBarWidth = 300;
+  const sideBarWidth = 240;
 
   return (
     <Root>

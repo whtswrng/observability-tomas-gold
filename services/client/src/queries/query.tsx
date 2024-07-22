@@ -23,8 +23,9 @@ export function useQuery<T>(fetch: () => Promise<{ data: T }>): {
       setError(undefined);
     } catch (e) {
       setError((e as Error)?.message ?? "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export function useQuery<T>(fetch: () => Promise<{ data: T }>): {
   };
 
   const refetch = () => {
-    if(isLoading) return; // do not refetch while request is in progress
+    if (isLoading) return; // do not refetch while request is in progress
     doFetch();
   };
 

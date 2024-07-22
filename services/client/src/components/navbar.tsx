@@ -1,7 +1,8 @@
 import LogoutIcon from "@mui/icons-material/Logout";
-import { IconButton, Tooltip } from "@mui/material";
+import { Box, Button, IconButton, Stack, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth-provider";
+import { AlertBudge } from "./alerts/alert-budge";
 
 export const NavBar = () => {
   const { logout } = useAuth();
@@ -11,13 +12,17 @@ export const NavBar = () => {
     await logout();
     navigate("/");
   };
+
   return (
-    <nav style={{ float: "right", padding: 10 }}>
-      <Tooltip title="Logout">
-        <IconButton edge="end" color="inherit" aria-label="logout" onClick={handleLogout} href="/login">
-          <LogoutIcon />
-        </IconButton>
-      </Tooltip>
-    </nav>
+    <Box sx={{ bgcolor: "background.paper", p: 2, float: "right" }}>
+      <Stack direction="row" spacing={2}>
+        <AlertBudge />
+        <Tooltip title="Logout">
+          <IconButton edge="end" color="inherit" aria-label="logout" onClick={handleLogout} href="/login">
+            <LogoutIcon />
+          </IconButton>
+        </Tooltip>
+      </Stack>
+    </Box>
   );
 };

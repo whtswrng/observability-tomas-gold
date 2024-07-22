@@ -59,8 +59,3 @@ x alerts
 x hosts details
     x time window
     x widgets
-
-
-- What I intentionally skipped due to the scope
-    - CSS
-    - Breadcrumbs
