@@ -40,6 +40,8 @@ In the root folder
     ```bash
     npm run dev
     ```
+**Note**:
+To simulate heavy CPU load I recommend using `stress --cpu {number_of_cpus} --timeout 999` [Link](https://formulae.brew.sh/formula/stress). 
 
 ### Usage
 
