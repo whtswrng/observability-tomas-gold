@@ -53,7 +53,7 @@ export const HostProvider = ({ children }) => {
         cpuLoadEvents,
         isLoading: isCpuLoadLoading || isEventsLoading,
         cpuEventsError: eventsError,
-        cpuMetricsError: metricsError
+        cpuMetricsError: metricsError,
       }}
     >
       {children}

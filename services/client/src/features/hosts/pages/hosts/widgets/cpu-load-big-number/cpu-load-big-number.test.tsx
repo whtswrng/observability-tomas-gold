@@ -101,7 +101,7 @@ describe("CPU Load Big Number Widget", () => {
       );
 
       await waitFor(() => {
-        const linkElement = screen.getByText("Something when wrong when loading a widget.");
+        const linkElement = screen.getByText("Something went wrong when loading a widget.");
         expect(linkElement).toBeInTheDocument();
       });
     });
