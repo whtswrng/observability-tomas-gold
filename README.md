@@ -12,8 +12,8 @@ This Proof of Concept (POC) aims to demonstrate my ability to build a fully func
 
 Ensure you have the following installed:
 
-- Node.js (v19 or later)
-- npm (v8 or later)
+- Node.js (v20.0.0 or higher)
+- npm (v9 or higher)
 - OSX (it should work on Windows, but I've not tested it)
 
 ### Installation
@@ -32,7 +32,6 @@ In the root folder
    ```bash
    npm run dev
    ```
-
 
 ### Usage
 
@@ -64,10 +63,11 @@ Before going live, couple of remarks what needs to be added
   - **Make sure to create automated strict rules of dependencies for feature folders so we avoid importing files from other feature teams!** (https://www.npmjs.com/package/dependency-cruiser). Alternative we could introduce isolated packages for each feature folders or going even further with micro frontend architecture.
 
 ## Architecture
-![Current architecture of this POC](docs/CURRENT_ARCHITECTURE.png)
 
+![Current architecture of this POC](docs/CURRENT_ARCHITECTURE.png)
 
 Here you can find the [real world example of observability architecture](docs/REAL_WORLD_ARCHITECTURE.png)
 
 ## Walkthrough
+
 Here is my walkthrough of the application and it's architecture [https://www.youtube.com/watch?v=cIFH9-gAMMk](https://www.youtube.com/watch?v=cIFH9-gAMMk)
