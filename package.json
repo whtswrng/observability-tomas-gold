@@ -7,6 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "bootstrap": "concurrently \"npm i --prefix services/client\" \"npm i --prefix services/alerting\" \"npm i --prefix services/server\"  \"npm i --prefix services/agent\" \"npm i --prefix services/collector\" \"npm i --prefix services/data\"",
     "dev": "concurrently \"npm run dev --prefix services/client\" \"npm run dev --prefix services/alerting\" \"npm run dev --prefix services/server\"  \"npm run dev --prefix services/agent\" \"npm run dev --prefix services/collector\" \"npm run dev --prefix services/data\""
   },
   "author": "",
