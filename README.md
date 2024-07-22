@@ -27,8 +27,8 @@ Ensure you have the following installed:
 - OSX (it should work on Windows, but I've not tested it)
 
 ### Installation
-
-1. Install dependencies for the front-end and each backend service:
+In the root folder
+1. Install dependencies for the front-end and each backend service by runnings these commands
 
     ```bash
     npm run install
@@ -44,7 +44,7 @@ Ensure you have the following installed:
 ### Usage
 
 1. **Front-End Application**: The front-end application can be accessed at `http://localhost:5173`.
-2. **API Endpoints**: The backend services expose various endpoints for metrics and logs (more info below)
+2. **API Endpoints**: The backend services expose various endpoints for metrics and events (more info below)
 
 
 ## Before deploying to production
@@ -53,7 +53,7 @@ Before going live, couple of remarks what needs to be added
 - Add more unit & integration tests
 - Add breadcrumbs
 - Move inline CSS styles to separate files and polish them
-- Migrate to `useQuery` and remove the `HostProvider`
+- Migrate to `useQuery` and remove the `HostProvider` (alternative tackle state management using Redux/...)
 - Add build pipeline (CircleCI/Github Actions)
     - **Make sure to create automated strict rules of dependencies for feature folders so we avoid importing files from other feature teams!** (https://www.npmjs.com/package/dependency-cruiser). Alternative we could introduce isolated packages for each feature folders.
 
