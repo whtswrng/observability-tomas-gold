@@ -1,5 +1,5 @@
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Box, Button, IconButton, Stack, Tooltip } from "@mui/material";
+import { Box, IconButton, Stack, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth-provider";
 import { AlertBudge } from "./alerts/alert-budge";

@@ -1,7 +1,7 @@
-import React from "react";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from "@mui/material";
 import HeavyLoadIcon from "@mui/icons-material/BrokenImage";
 import RecoveredIcon from "@mui/icons-material/Favorite";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import React from "react";
 import { CpuLoadEvent } from "../../../queries/cpu-load-events";
 import { CpuState } from "../details";
 
@@ -17,10 +17,10 @@ export const CpuLoadEventsTable: React.FC<{ data: Array<CpuLoadEvent> }> = ({ da
     }
   };
 
-  const rows = data.map((event, index) => ({
+  const rows = data.map((event) => ({
     icon: renderIcon(event.type),
     type: event.type,
-    started: new Date(event.startTimestamp).toLocaleString(), // Adjust format as needed
+    started: new Date(event.startTimestamp).toLocaleString(),
   }));
 
   if (rows.length === 0) return <Typography>No records</Typography>;

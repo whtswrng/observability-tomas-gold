@@ -1,9 +1,9 @@
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { Badge, Box, IconButton, List, ListItem, ListItemText, Popover, Typography } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { Alerts } from "./alerts";
-import { useGetAlerts } from "../../queries/alerts";
+import { Badge, Box, IconButton, Popover } from "@mui/material";
 import isEqual from "lodash/isEqual";
+import { useEffect, useRef, useState } from "react";
+import { useGetAlerts } from "../../queries/alerts";
+import { Alerts } from "./alerts";
 
 const FETCH_ALERTS_INTERVAL_IN_MS = 5000;
 

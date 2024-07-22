@@ -1,21 +1,18 @@
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import DevicesOtherIcon from "@mui/icons-material/DevicesOther";
 import LanIcon from "@mui/icons-material/Lan";
 import AlertIcon from "@mui/icons-material/Warning";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { NavLink, useNavigate } from "react-router-dom";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/auth-provider";
 import { getHostsRoute, getOrgRoute } from "../router";
 import { assertUserLoggedIn } from "../utils/assertions";
 
-import { Alert, Divider } from "@mui/material";
-import { Alerts } from "./alerts/alerts";
 
 const getNavigationStyle = (isActive: boolean) => {
   return {

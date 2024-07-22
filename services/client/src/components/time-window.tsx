@@ -1,7 +1,7 @@
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTimeWindow } from "../contexts/time-window-provider";
 
 export const LIVE_RELOAD_INTERVAL_IN_MS = 10000;
@@ -10,19 +10,19 @@ const TimeWindow: React.FC = () => {
   const { labelInMinutes, setLabelInMinutes } = useTimeWindow();
   const [liveEnabled, setLiveEnabled] = useState(true);
 
-  const handleTimeChange = (value: string) => {
+  const handleTimeChange = useCallback((value: string) => {
     setLabelInMinutes(value);
-  };
+  }, []);
 
   useEffect(() => {
-    if (!labelInMinutes || ! liveEnabled) return;
+    if (!labelInMinutes || !liveEnabled) return;
     const interval = setInterval(() => {
       handleTimeChange(labelInMinutes);
     }, LIVE_RELOAD_INTERVAL_IN_MS);
     return () => {
       clearInterval(interval);
     };
-  }, [labelInMinutes, liveEnabled]);
+  }, [labelInMinutes, liveEnabled, handleTimeChange]);
 
   return (
     <div style={{ display: "flex", maxWidth: 500, gap: 10 }}>

@@ -1,5 +1,5 @@
 import { addMinutes } from "date-fns";
-import React, { createContext, useState, useContext, ReactNode, useMemo } from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 interface TimeWindowContextProps {
   startTime: number;

@@ -2,18 +2,19 @@ import { CssBaseline } from "@mui/material";
 import { styled } from "@mui/system";
 import React, { Suspense, lazy } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import ErrorBoundary from "./components/error-boundary";
 import { NavBar } from "./components/navbar";
 import Sidebar from "./components/sidebar";
-import { AuthProvider, useAuth } from "./contexts/auth-provider";
-import { Home } from "./pages/home";
 import { Spinner } from "./components/spinner";
+import { AuthProvider, useAuth } from "./contexts/auth-provider";
 import { TimeWindowProvider } from "./contexts/time-window-provider";
+import { Home } from "./pages/home";
 
 const Login = lazy(() => import("./pages/login/login"));
 // feature navigators
 const HostsNavigator = lazy(() => import("./features/hosts/navigator"));
 
-const Root = styled("div")(({ theme }) => ({
+const Root = styled("div")(() => ({
   display: "flex",
 }));
 
@@ -25,17 +26,19 @@ const Content = styled("main")(({ theme }) => ({
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <TimeWindowProvider>
-          <AppContent />
-        </TimeWindowProvider>
-      </AuthProvider>
+      <ErrorBoundary>
+        <AuthProvider>
+          <TimeWindowProvider>
+            <AppContent />
+          </TimeWindowProvider>
+        </AuthProvider>
+      </ErrorBoundary>
     </Router>
   );
 }
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
     return <Login />;
@@ -47,9 +50,9 @@ const AppContent: React.FC = () => {
     <Root>
       <CssBaseline />
       <Sidebar width={sideBarWidth} />
-      <Content style={{marginLeft: sideBarWidth}}>
+      <Content style={{ marginLeft: sideBarWidth }}>
         <NavBar />
-        <Suspense fallback={<Spinner/>}>
+        <Suspense fallback={<Spinner />}>
           <Routes>
             <Route path="/org/:id/" element={<Home />} />
             <Route path="/org/:id/entities/hosts/*" element={<HostsNavigator />} />
