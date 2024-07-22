@@ -63,9 +63,9 @@ Before going live, couple of remarks what needs to be added
   - **Make sure to create automated strict rules of dependencies for feature folders so we avoid importing files from other feature teams!** (https://www.npmjs.com/package/dependency-cruiser). Alternative we could introduce isolated packages for each feature folders.
 
 ## Architecture
-![Current architecture of this POC](https://github.com/whtswrng/observability-tomas-gold/blob/5791d8af7058709f6cd0291f29a213582e857eb0/docs/CURRENT_ARCHITECTURE.png)
+![Current architecture of this POC](docs/CURRENT_ARCHITECTURE.png)
 
 
-Here you can find the [real world example of observability architecture](https://github.com/whtswrng/observability-tomas-gold/blob/5791d8af7058709f6cd0291f29a213582e857eb0/docs/REAL_WORLD_ARCHITECTURE.png)
+Here you can find the [real world example of observability architecture](docs/REAL_WORLD_ARCHITECTURE.png)
 
 ## Walkthrough
