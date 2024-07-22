@@ -1,4 +1,5 @@
 import { Alert, Box, Card, LinearProgress, Skeleton, Typography } from "@mui/material";
+import { ReactNode } from "react";
 import { IconWithTooltip } from "./tooltip";
 
 interface WidgetProps {
@@ -6,7 +7,7 @@ interface WidgetProps {
   hasData: boolean;
   title: string;
   description: string;
-  children: any;
+  children: ReactNode;
   error?: string;
 }
 
@@ -33,7 +34,7 @@ export const Widget = ({ isLoading, error, hasData, title, description, children
 };
 
 const ErrorMessage = () => {
-  return <Alert severity="error">Something when wrong when loading a widget.</Alert>;
+  return <Alert severity="error">Something went wrong when loading a widget.</Alert>;
 };
 
 export const BigNumber = ({ children, severity = "info" }) => {

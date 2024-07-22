@@ -33,12 +33,12 @@ In the root folder
    npm run dev
    ```
 
-**Note**:
-To simulate heavy CPU load I recommend using `stress --cpu {number_of_cpus} --timeout 999` [Link](https://formulae.brew.sh/formula/stress).
 
 ### Usage
 
 The front-end application can be accessed at `http://localhost:5173`. User is `admin` and password is `admin`.
+**Note**:
+To simulate heavy CPU load I recommend using `stress --cpu {number_of_cpus} --timeout 999` [Link](https://formulae.brew.sh/formula/stress).
 
 ### Assignment scope
 
