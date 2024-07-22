@@ -36,10 +36,12 @@ const ErrorMessage = () => {
   return <Alert severity="error">Something when wrong when loading a widget.</Alert>;
 };
 
-export const BigNumber = ({ children }) => {
+export const BigNumber = ({ children, severity = "info" }) => {
   return (
     <Box>
-      <Typography fontSize={40}>{children}</Typography>
+      <Typography fontSize={40} color={severity === "warning" ? "red" : "black"}>
+        {children}
+      </Typography>
     </Box>
   );
 };

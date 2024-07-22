@@ -12,7 +12,9 @@ export const CpuLoadBigNumber = () => {
       error={cpuMetricsError}
       description="Average CPU load during the time window"
     >
-      <BigNumber>{cpuLoadMetrics?.avg}</BigNumber>
+      <BigNumber severity={parseInt(cpuLoadMetrics?.avg ?? "") >= 1 ? "warning" : "info"}>
+        {cpuLoadMetrics?.avg}
+      </BigNumber>
     </Widget>
   );
 };

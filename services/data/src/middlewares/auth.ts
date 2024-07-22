@@ -1,8 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { SECRET_KEY } from '../config';
 import { User } from 'src';
-import { assertUserAuthorized } from 'src/utils/assert-user-authorized';
+import { SECRET_KEY } from '../config';
 
 export interface AuthorizedRequest extends Request {
   user: User;
