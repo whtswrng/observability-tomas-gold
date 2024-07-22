@@ -36,7 +36,8 @@ In the root folder
 
 ### Usage
 
-The front-end application can be accessed at `http://localhost:5173`. User is `admin` and password is `admin`.
+The front-end application can be accessed at `http://localhost:5173`.
+User is `admin` and password is `admin`.
 **Note**:
 To simulate heavy CPU load I recommend using `stress --cpu {number_of_cpus} --timeout 999` [Link](https://formulae.brew.sh/formula/stress).
 
@@ -69,3 +70,4 @@ Before going live, couple of remarks what needs to be added
 Here you can find the [real world example of observability architecture](docs/REAL_WORLD_ARCHITECTURE.png)
 
 ## Walkthrough
+Here is my walkthrough of the application and it's architecture [https://www.youtube.com/watch?v=cIFH9-gAMMk](https://www.youtube.com/watch?v=cIFH9-gAMMk)
