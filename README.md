@@ -60,7 +60,7 @@ Before going live, couple of remarks what needs to be added
 - Move inline CSS styles to separate files and polish them
 - Migrate to `useQuery` and remove the `HostProvider` (alternative tackle state management using Redux/...)
 - Add build pipeline (CircleCI/Github Actions)
-  - **Make sure to create automated strict rules of dependencies for feature folders so we avoid importing files from other feature teams!** (https://www.npmjs.com/package/dependency-cruiser). Alternative we could introduce isolated packages for each feature folders.
+  - **Make sure to create automated strict rules of dependencies for feature folders so we avoid importing files from other feature teams!** (https://www.npmjs.com/package/dependency-cruiser). Alternative we could introduce isolated packages for each feature folders or going even further with micro frontend architecture.
 
 ## Architecture
 ![Current architecture of this POC](docs/CURRENT_ARCHITECTURE.png)
