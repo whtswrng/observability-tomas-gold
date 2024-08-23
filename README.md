@@ -32,6 +32,10 @@ In the root folder
    ```bash
    npm run dev
    ```
+**If there is an error while running client make sure to**
+   1. Remove the "node_modules" in the client folder
+   2. Run `npm i` in the client folder
+
 
 ### Usage
 
